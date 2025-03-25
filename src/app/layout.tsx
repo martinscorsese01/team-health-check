@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Team Health Check',
-  description: 'Track your team\'s emotional health and well-being',
+  description: 'Track your team\'s emotional well-being',
 };
 
 export default function RootLayout({
