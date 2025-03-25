@@ -20,7 +20,7 @@ const healthCheckSchema = z.object({
   }, 'Invalid date format'),
 });
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<NextResponse> {
   try {
     const body = await request.json();
     const validatedData = healthCheckSchema.parse(body);
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
   try {
     const { data, error } = await supabase
       .from('team-health')
