@@ -61,8 +61,8 @@ export async function GET(): Promise<Response> {
   try {
     const { data, error } = await supabase
       .from('team-health')
-      .select('id, name, feeling, date, created_at')
-      .order('created_at', { ascending: false });
+      .select('id, name, feeling, date')
+      .order('date', { ascending: false });
 
     if (error) {
       console.error('Supabase error:', error);
