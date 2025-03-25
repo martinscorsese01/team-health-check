@@ -20,7 +20,7 @@ const healthCheckSchema = z.object({
   }, 'Invalid date format'),
 });
 
-export async function POST(request: Request): Promise<NextResponse> {
+export async function POST(request: Request): Promise<Response> {
   try {
     const body = await request.json();
     const validatedData = healthCheckSchema.parse(body);
@@ -38,26 +38,26 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     if (error) {
       console.error('Supabase error:', error);
-      return NextResponse.json(
+      return Response.json(
         { error: error.message },
         { status: 400 }
       );
     }
 
-    return NextResponse.json(data);
+    return Response.json(data);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return Response.json({ error: error.errors }, { status: 400 });
     }
     console.error('Unexpected error:', error);
-    return NextResponse.json(
+    return Response.json(
       { error: 'Internal Server Error' },
       { status: 500 }
     );
   }
 }
 
-export async function GET(): Promise<NextResponse> {
+export async function GET(): Promise<Response> {
   try {
     const { data, error } = await supabase
       .from('team-health')
@@ -66,20 +66,20 @@ export async function GET(): Promise<NextResponse> {
 
     if (error) {
       console.error('Supabase error:', error);
-      return NextResponse.json(
+      return Response.json(
         { error: error.message },
         { status: 400 }
       );
     }
 
     if (!data) {
-      return NextResponse.json([], { status: 200 });
+      return Response.json([], { status: 200 });
     }
 
-    return NextResponse.json(data);
+    return Response.json(data);
   } catch (error) {
     console.error('Unexpected error:', error);
-    return NextResponse.json(
+    return Response.json(
       { error: 'Internal Server Error' },
       { status: 500 }
     );
